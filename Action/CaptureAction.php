@@ -26,10 +26,10 @@ class CaptureAction implements ActionInterface
             return;
         }
 
-        if ($model[''])
-
-        $api = \SecureTrading\api($model);
-        $response = $api->process($model);
+//        if ($model[''])
+//
+//        $api = \SecureTrading\api($model);
+//        $response = $api->process($model);
 
         throw new \LogicException('Not implemented');
     }

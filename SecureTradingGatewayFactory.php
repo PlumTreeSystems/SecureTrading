@@ -35,7 +35,8 @@ class SecureTradingGatewayFactory extends GatewayFactory
 
         if (false == $config['plumtreesystems.api']) {
             $config['plumtreesystems.default_options'] = array(
-                'sandbox' => true,
+                'sitereference' => 'test_site12345',
+                'locale' => 'en_gb'
             );
             $config->defaults($config['plumtreesystems.default_options']);
             $config['plumtreesystems.required_options'] = [];
