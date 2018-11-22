@@ -1,6 +1,7 @@
 {
     "name": "plumtreesystems/secure-trading",
     "type": "library",
+    "version":  "0.0.1",
     "description": "This is a Gateway being built to work with the Payum library",
     "keywords": ["payment"],
     "homepage": "https://payum.forma-pro.com",
