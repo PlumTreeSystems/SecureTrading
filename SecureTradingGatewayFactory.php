@@ -44,7 +44,7 @@ class SecureTradingGatewayFactory extends GatewayFactory
             $config['plumtreesystems.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['plumtreesystems.required_options']);
 
-                return new Api((array) $config, $config['plumtreesystems.http_client'], $config['httplug.message_factory']);
+                //return new Api((array) $config, $config['plumtreesystems.http_client'], $config['httplug.message_factory']);
             };
         }
     }
