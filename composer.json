@@ -1,7 +1,7 @@
 {
-    "name": "plumtreesystems/secure_trading",
+    "name": "PlumTreeSystems/SecureTrading",
     "type": "project",
-    "description": "The Payum extension. Rapid extensino development",
+    "description": "This is a Gateway being built to work with the Payum library",
     "keywords": ["payment"],
     "homepage": "https://payum.forma-pro.com",
     "license": "MIT",
