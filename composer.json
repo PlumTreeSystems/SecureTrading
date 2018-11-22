@@ -1,5 +1,5 @@
 {
-    "name": "PlumTreeSystems/SecureTrading",
+    "name": "plumtreeystems/secure-trading",
     "type": "project",
     "description": "This is a Gateway being built to work with the Payum library",
     "keywords": ["payment"],
