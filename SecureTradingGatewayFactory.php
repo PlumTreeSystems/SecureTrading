@@ -41,11 +41,11 @@ class SecureTradingGatewayFactory extends GatewayFactory
             $config->defaults($config['plumtreesystems.default_options']);
             $config['plumtreesystems.required_options'] = [];
 
-            $config['plumtreesystems.api'] = function (ArrayObject $config) {
-                $config->validateNotEmpty($config['plumtreesystems.required_options']);
-
-                //return new Api((array) $config, $config['plumtreesystems.http_client'], $config['httplug.message_factory']);
-            };
+//            $config['plumtreesystems.api'] = function (ArrayObject $config) {
+//                $config->validateNotEmpty($config['plumtreesystems.required_options']);
+//
+//                //return new Api((array) $config, $config['plumtreesystems.http_client'], $config['httplug.message_factory']);
+//            };
         }
     }
 }
