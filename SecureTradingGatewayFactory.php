@@ -19,27 +19,27 @@ class SecureTradingGatewayFactory extends GatewayFactory
     protected function populateConfig(ArrayObject $config)
     {
         $config->defaults([
-            'plumtreesystems.factory_name' => 'secure_trading',
-            'plumtreesystems.factory_title' => 'secure_trading',
+            'payum.factory_name' => 'secure_trading',
+            'payum.factory_title' => 'secure_trading',
 
-            'plumtreesystems.template.obtain_token' => '@PlumTreeSystems/Action/obtain_token.html.twig',
+            'payum.template.obtain_token' => '@PlumTreeSystems/Action/obtain_token.html.twig',
 
-            'plumtreesystems.action.capture' => new CaptureAction(),
-            'plumtreesystems.action.authorize' => new AuthorizeAction(),
-            'plumtreesystems.action.refund' => new RefundAction(),
-            'plumtreesystems.action.cancel' => new CancelAction(),
-            'plumtreesystems.action.notify' => new NotifyAction(),
-            'plumtreesystems.action.status' => new StatusAction(),
-            'plumtreesystems.action.convert_payment' => new ConvertPaymentAction(),
+            'payum.action.capture' => new CaptureAction(),
+            'payum.action.authorize' => new AuthorizeAction(),
+            'payum.action.refund' => new RefundAction(),
+            'payum.action.cancel' => new CancelAction(),
+            'payum.action.notify' => new NotifyAction(),
+            'payum.action.status' => new StatusAction(),
+            'payum.action.convert_payment' => new ConvertPaymentAction(),
         ]);
 
-        if (false == $config['plumtreesystems.api']) {
-            $config['plumtreesystems.default_options'] = array(
+        if (false == $config['payum.api']) {
+            $config['payum.default_options'] = array(
                 'sitereference' => 'test_site12345',
                 'locale' => 'en_gb'
             );
-            $config->defaults($config['plumtreesystems.default_options']);
-            $config['plumtreesystems.required_options'] = [];
+            $config->defaults($config['payum.default_options']);
+            $config['payum.required_options'] = [];
 
 //            $config['plumtreesystems.api'] = function (ArrayObject $config) {
 //                $config->validateNotEmpty($config['plumtreesystems.required_options']);
