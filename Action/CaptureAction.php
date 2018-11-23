@@ -3,12 +3,13 @@ namespace PlumTreeSystems\SecureTrading\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
 
-class CaptureAction implements ActionInterface
+class CaptureAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
 
