@@ -47,22 +47,22 @@ class ObtainTokenAction extends BaseApiAwareAction
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        if ($model['token']) {
+        if ($model['cachetoken']) {
             throw new LogicException('The token has already been set.');
         }
 
         $getHttpRequest = new GetHttpRequest();
         $this->gateway->execute($getHttpRequest);
         if ($getHttpRequest->method == 'POST' && isset($getHttpRequest->request['cachetoken'])) {
-            $model['token'] = $getHttpRequest->request['cachetoken'];
+            $model['cachetoken'] = $getHttpRequest->request['cachetoken'];
 
             return;
         }
 
-        $this->gateway->execute($renderTemplate = new RenderTemplate($this->templateName, array(
+        $this->gateway->execute($renderTemplate = new RenderTemplate($this->templateName, [
             'model' => $model,
             'actionUrl' => $request->getToken() ? $request->getToken()->getTargetUrl() : null,
-        )));
+        ]));
 
         throw new HttpResponse($renderTemplate->getResult());
     }

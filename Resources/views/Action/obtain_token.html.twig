@@ -1,42 +1,46 @@
-<html>
+{% extends layout ?: "@PayumCore/layout.html.twig" %}
 
-<head>
-    <style>
-        #st-payment input.st-error {
-            background-color: #ffc6c7;
-            border: 2px solid #ffb5b5;
-        }
-        #st-message .st-error {
-            background: #ffcdcd;
-            border: 2px solid #ffb5b5;
-            padding: 4px 4px 4px 28px !important;
-        }
-    </style>
-</head>
+{% block head %}
+    <head>
+        <style>
+            #st-payment input.st-error {
+                background-color: #ffc6c7;
+                border: 2px solid #ffb5b5;
+            }
+            #st-message .st-error {
+                background: #ffcdcd;
+                border: 2px solid #ffb5b5;
+                padding: 4px 4px 4px 28px !important;
+            }
+        </style>
+    </head>
+{% endblock %}
 
-<body>
-<div id="st-message"></div>
-<form id="st-payment" action="{{ actionUrl|default('') }}">
-    <!--Ensure all payment details use the data-st-field attribute.-->
-    Pan:
-    <input type="text" data-st-field="pan" autocomplete="off" /></br>
-    Expiry Month:
-    <input type="text" data-st-field="expirymonth" autocomplete="off" /></br>
-    Expiry Year:
-    <input type="text" data-st-field="expiryyear" autocomplete="off" /></br>
-    Security Code:
-    <input type="text" data-st-field="securitycode" autocomplete="off" /></br>
-    <!--You can submit your own custom fields within this form, e.g. discount code-->
-    Discount Code:
-    <input type="text" name="discountcode" autocomplete="off" /></br>
-    <input type="submit" name="mybtn" />
-</form>
-<script src="https://webservices.securetrading.net/js/st.js"></script>
-<script>
-    new SecureTrading.Standard({
-        sitereference: {{ siteReference }},
-        locale: {{ locale }}
-    });
-</script>
-</body>
-</html>
+{% block payum_body %}
+    <body>
+    <div id="st-message"></div>
+        <form id="st-payment" action="{{ actionUrl|default('') }}">
+            <!--Ensure all payment details use the data-st-field attribute.-->
+            <label for="pan">Pan:</label>
+            <input id="pan" type="text" data-st-field="pan" autocomplete="off" /><br>
+            <label for="exp_m">Expiry Month:</label>
+            <input id="exp_m" type="text" data-st-field="expirymonth" autocomplete="off" /><br>
+            <label for="exp_y" >Expiry Year:</label>
+            <input id="exp_y" type="text" data-st-field="expiryyear" autocomplete="off" /><br>
+            <label for="sec">Security Code:</label>
+            <input id="sec" type="text" data-st-field="securitycode" autocomplete="off" /><br>
+            <input type="submit" name="mybtn" />
+        </form>
+    </body>
+{% endblock %}
+
+{% block payum_javascripts %}
+    {{ parent() }}
+    <script src="https://webservices.securetrading.net/js/st.js"></script>
+    <script>
+        new SecureTrading.Standard({
+            sitereference: {{ model.siteReference }},
+            locale: {{ model.locale }}
+        });
+    </script>
+{% endblock %}

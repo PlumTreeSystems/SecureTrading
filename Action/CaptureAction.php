@@ -6,6 +6,7 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
+use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
 
 class CaptureAction implements ActionInterface
 {
@@ -26,10 +27,12 @@ class CaptureAction implements ActionInterface
             return;
         }
 
-//        if ($model[''])
-//
-//        $api = \SecureTrading\api($model);
-//        $response = $api->process($model);
+        if (false == $model['cachetoken']) {
+            $obtainToken = new ObtainToken($request->getToken());
+            $obtainToken->setModel($model);
+
+            $this->gateway->execute($obtainToken);
+        }
 
         throw new \LogicException('Not implemented');
     }

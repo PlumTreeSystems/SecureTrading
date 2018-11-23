@@ -1,6 +1,7 @@
 <?php
 namespace PlumTreeSystems\SecureTrading;
 
+use PlumTreeSystems\SecureTrading\Action\Api\ObtainTokenAction;
 use PlumTreeSystems\SecureTrading\Action\AuthorizeAction;
 use PlumTreeSystems\SecureTrading\Action\CancelAction;
 use PlumTreeSystems\SecureTrading\Action\ConvertPaymentAction;
@@ -22,7 +23,7 @@ class SecureTradingGatewayFactory extends GatewayFactory
             'payum.factory_name' => 'secure_trading',
             'payum.factory_title' => 'secure_trading',
 
-            'payum.template.obtain_token' => '@PlumTreeSystems/Action/obtain_token.html.twig',
+            'payum.template.obtain_token' => '@PlumTreeSystemsSecureTrading/Action/obtain_token.html.twig',
 
             'payum.action.capture' => new CaptureAction(),
             'payum.action.authorize' => new AuthorizeAction(),
@@ -31,6 +32,10 @@ class SecureTradingGatewayFactory extends GatewayFactory
             'payum.action.notify' => new NotifyAction(),
             'payum.action.status' => new StatusAction(),
             'payum.action.convert_payment' => new ConvertPaymentAction(),
+
+            'payum.action.obtain_token' => function (ArrayObject $config) {
+                return new ObtainTokenAction($config['payum.template.obtain_token']);
+            }
         ]);
 
         if (false == $config['payum.api']) {
@@ -47,5 +52,9 @@ class SecureTradingGatewayFactory extends GatewayFactory
 //                //return new Api((array) $config, $config['plumtreesystems.http_client'], $config['httplug.message_factory']);
 //            };
         }
+
+        $config['payum.paths'] = array_replace([
+            'PlumTreeSystemsSecureTrading' => __DIR__.'/Resources/views',
+        ], $config['payum.paths'] ?: []);
     }
 }
