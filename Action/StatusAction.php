@@ -12,6 +12,7 @@ class StatusAction implements ActionInterface
      * {@inheritDoc}
      *
      * @param GetStatusInterface $request
+     * TODO go over this area again
      */
     public function execute($request)
     {
@@ -19,7 +20,31 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not implemented');
+        switch ($model['errorcode'])
+        {
+            case "0":
+                $request->markAuthorized();
+                return;
+            case "30000":
+                $request->markFailed();
+                return;
+            case "70000":
+                $request->markFailed();
+                return;
+            case "60010":
+            case "60034":
+            case "99999":
+                $request->markFailed();
+                return;
+        }
+
+        if (!isset($model['errorcode']) && !isset($model['status'])) {
+            $request->markNew();
+            return;
+        }
+
+
+        throw new \LogicException('Invalid Status');
     }
 
     /**
