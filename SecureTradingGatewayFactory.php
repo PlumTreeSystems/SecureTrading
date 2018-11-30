@@ -39,18 +39,26 @@ class SecureTradingGatewayFactory extends GatewayFactory
         ]);
 
         if (false == $config['payum.api']) {
-            $config['payum.default_options'] = array(
-                'sitereference' => 'test_site12345',
-                'locale' => 'en_gb'
-            );
+            $config['payum.default_options'] = [
+                'sitereference' => '',
+                'locale' => 'en_gb',
+                'username' => '',
+                'password' => ''
+            ];
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = [];
+            $config['payum.required_options'] = [
+                'sitereference', 'locale', 'username', 'password'
+            ];
 
-//            $config['plumtreesystems.api'] = function (ArrayObject $config) {
-//                $config->validateNotEmpty($config['plumtreesystems.required_options']);
-//
-//                //return new Api((array) $config, $config['plumtreesystems.http_client'], $config['httplug.message_factory']);
-//            };
+            $config['payum.api'] = function (ArrayObject $config) {
+                $config->validateNotEmpty($config['payum.required_options']);
+
+                return new Api(
+                    (array) $config,
+                    $config['plumtreesystems.http_client'],
+                    $config['httplug.message_factory']
+                );
+            };
         }
 
         $config['payum.paths'] = array_replace([

@@ -20,7 +20,7 @@ use Payum\Core\Request\RenderTemplate;
 use PlumTreeSystems\SecureTrading\Action\Api\BaseApiAwareAction;
 use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
 
-class ObtainTokenAction extends BaseApiAwareAction
+class ObtainTokenAction implements ActionInterface
 {
     protected $templateName;
 
@@ -30,10 +30,8 @@ class ObtainTokenAction extends BaseApiAwareAction
      */
     public function __construct($templateName)
     {
-        parent::__construct();
         $this->templateName = $templateName;
     }
-
 
     /**
      * @param mixed $request
