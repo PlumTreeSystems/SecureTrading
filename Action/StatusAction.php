@@ -43,6 +43,11 @@ class StatusAction implements ActionInterface
             return;
         }
 
+        if ($model['status'] === 'pending') {
+            $request->markNew();
+            return;
+        }
+
 
         throw new \LogicException('Invalid Status');
     }

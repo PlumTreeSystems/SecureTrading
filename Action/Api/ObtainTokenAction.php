@@ -10,18 +10,27 @@ namespace PlumTreeSystems\SecureTrading\Action\Api;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
+use Payum\Core\ApiAwareTrait;
 use Payum\Core\Exception\LogicException;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Exception\UnsupportedApiException;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Payum\Core\GatewayAwareInterface;
+use Payum\Core\GatewayAwareTrait;
+use Payum\Core\GatewayInterface;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\RenderTemplate;
 use PlumTreeSystems\SecureTrading\Action\Api\BaseApiAwareAction;
+use PlumTreeSystems\SecureTrading\Api;
 use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
 
-class ObtainTokenAction implements ActionInterface
+class ObtainTokenAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
+    use ApiAwareTrait;
+
+    use GatewayAwareTrait;
+
     protected $templateName;
 
     /**
@@ -31,6 +40,7 @@ class ObtainTokenAction implements ActionInterface
     public function __construct($templateName)
     {
         $this->templateName = $templateName;
+        $this->apiClass = Api::class;
     }
 
     /**
@@ -51,14 +61,22 @@ class ObtainTokenAction implements ActionInterface
 
         $getHttpRequest = new GetHttpRequest();
         $this->gateway->execute($getHttpRequest);
-        if ($getHttpRequest->method == 'POST' && isset($getHttpRequest->request['cachetoken'])) {
-            $model['cachetoken'] = $getHttpRequest->request['cachetoken'];
+        if ($getHttpRequest->method == 'GET' &&
+            isset($getHttpRequest->query['cachetoken']) &&
+            strlen($getHttpRequest->query['cachetoken'])
+        ) {
+            $model['cachetoken'] = $getHttpRequest->query['cachetoken'];
+            $model['cachetoken_timestamp'] = time();
 
             return;
         }
 
+        $siteReference = $this->api->getSiteReference();
+
         $this->gateway->execute($renderTemplate = new RenderTemplate($this->templateName, [
             'model' => $model,
+            'site_reference' => $siteReference,
+            'locale' => Api::LOCALE_EN, // TODO: change this default
             'actionUrl' => $request->getToken() ? $request->getToken()->getTargetUrl() : null,
         ]));
 
@@ -75,6 +93,6 @@ class ObtainTokenAction implements ActionInterface
         return
             $request instanceof ObtainToken &&
             $request->getModel() instanceof \ArrayAccess
-        ;
+            ;
     }
 }

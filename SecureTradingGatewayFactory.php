@@ -55,7 +55,7 @@ class SecureTradingGatewayFactory extends GatewayFactory
 
                 return new Api(
                     (array) $config,
-                    $config['plumtreesystems.http_client'],
+                    $config['payum.http_client'],
                     $config['httplug.message_factory']
                 );
             };

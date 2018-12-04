@@ -19,18 +19,18 @@
 {% block payum_body %}
     <body>
     <div id="st-message"></div>
-        <form id="st-payment" action="{{ actionUrl|default('') }}">
-            <!--Ensure all payment details use the data-st-field attribute.-->
-            <label for="pan">Pan:</label>
-            <input id="pan" type="text" data-st-field="pan" autocomplete="off" /><br>
-            <label for="exp_m">Expiry Month:</label>
-            <input id="exp_m" type="text" data-st-field="expirymonth" autocomplete="off" /><br>
-            <label for="exp_y" >Expiry Year:</label>
-            <input id="exp_y" type="text" data-st-field="expiryyear" autocomplete="off" /><br>
-            <label for="sec">Security Code:</label>
-            <input id="sec" type="text" data-st-field="securitycode" autocomplete="off" /><br>
-            <input type="submit" name="mybtn" />
-        </form>
+    <form id="st-payment" action="{{ actionUrl|default('') }}">
+        <!--Ensure all payment details use the data-st-field attribute.-->
+        <label for="pan">Pan:</label>
+        <input id="pan" type="text" data-st-field="pan" autocomplete="off" /><br>
+        <label for="exp_m">Expiry Month:</label>
+        <input id="exp_m" type="text" data-st-field="expirymonth" autocomplete="off" /><br>
+        <label for="exp_y" >Expiry Year:</label>
+        <input id="exp_y" type="text" data-st-field="expiryyear" autocomplete="off" /><br>
+        <label for="sec">Security Code:</label>
+        <input id="sec" type="text" data-st-field="securitycode" autocomplete="off" /><br>
+        <input type="submit" name="mybtn" />
+    </form>
     </body>
 {% endblock %}
 
@@ -39,8 +39,8 @@
     <script src="https://webservices.securetrading.net/js/st.js"></script>
     <script>
         new SecureTrading.Standard({
-            sitereference: {{ model.siteReference }},
-            locale: {{ model.locale }}
+            sitereference: {{ site_reference }},
+            locale: {{ locale }}
         });
     </script>
 {% endblock %}

@@ -4,9 +4,21 @@ namespace PlumTreeSystems\SecureTrading;
 use Http\Message\MessageFactory;
 use Payum\Core\Exception\Http\HttpException;
 use Payum\Core\HttpClientInterface;
+use Payum\Core\Bridge\Spl\ArrayObject;
 
 class Api
 {
+    const LOCALE_EN = 'en_gb';
+    const LOCALE_FR = 'fr_fr';
+    const LOCALE_DE = 'de_de';
+
+    const REQUEST_ACCOUNT = 'ACCOUNTCHECK';
+    const REQUEST_AUTH = 'AUTH';
+    const REQUEST_REFUND = 'REFUND';
+    const REQUEST_THREEDQUERY = 'THREEDQUERY';
+    const REQUEST_SUBSCRIPTION = 'SUBSCRIPTION';
+
+
     /**
      * @var HttpClientInterface
      */
@@ -20,7 +32,13 @@ class Api
     /**
      * @var array
      */
-    protected $options = [];
+    protected $options = [
+        'username' => null,
+        'password' => null,
+        'site_reference' => null
+    ];
+
+    protected $api = null;
 
     /**
      * @param array               $options
@@ -31,9 +49,31 @@ class Api
      */
     public function __construct(array $options, HttpClientInterface $client, MessageFactory $messageFactory)
     {
+        $options = ArrayObject::ensureArrayObject($options);
+        $options->defaults($this->options);
+        $options->validateNotEmpty([
+            'username',
+            'password',
+            'site_reference'
+        ]);
+
+        $this->api = \Securetrading\api([
+            $options->toUnsafeArrayWithoutLocal()
+        ]);
+
         $this->options = $options;
         $this->client = $client;
         $this->messageFactory = $messageFactory;
+    }
+
+    public function simpleChargeRequest(array $fields)
+    {
+        $fields = array_merge($fields, [
+            'accounttypedescription' => 'ECOM',
+            'requesttypedescriptions' => ['AUTH'],
+            'sitereference' => $this->options['site_reference']
+        ]);
+        return $this->doRequest($fields);
     }
 
     /**
@@ -41,26 +81,15 @@ class Api
      *
      * @return array
      */
-    protected function doRequest($method, array $fields)
+    protected function doRequest(array $fields)
     {
-        $headers = [];
-
-        $request = $this->messageFactory->createRequest($method, $this->getApiEndpoint(), $headers, http_build_query($fields));
-
-        $response = $this->client->send($request);
-
-        if (false == ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300)) {
-            throw HttpException::factory($request, $response);
-        }
+        $response = $this->api->process($fields);
 
         return $response;
     }
 
-    /**
-     * @return string
-     */
-    protected function getApiEndpoint()
+    public function getSiteReference()
     {
-        return $this->options['sandbox'] ? 'http://sandbox.example.com' : 'http://example.com';
+        return $this->options['site_reference'];
     }
 }
