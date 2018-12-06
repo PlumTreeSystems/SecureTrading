@@ -20,28 +20,27 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        switch ($model['errorcode'])
-        {
-            case "0":
-                if (isset($model['requesttypedescription'])) {
-                    switch($model['requesttypedescription'])
-                    {
-                        case "AUTH":
-                            $request->markCaptured();
-                            return;
-                        case "ACCOUNTCHECK":
-                            $request->markAuthorized();
-                            return;
+        if (isset($model['errorcode'])) {
+            switch ($model['errorcode'])
+            {
+                case "0":
+                    if (isset($model['requesttypedescription'])) {
+                        switch($model['requesttypedescription'])
+                        {
+                            case "AUTH":
+                                $request->markCaptured();
+                                return;
+                            case "ACCOUNTCHECK":
+                                $request->markAuthorized();
+                                return;
+                        }
                     }
-                }
-            case "30000":
-            case "70000":
-            case "60010":
-            case "60034":
-            case "99999":
-                $request->markFailed();
-                return;
+                default:
+                    $request->markFailed();
+                    return;
+            }
         }
+
 
         if (!isset($model['errorcode']) && !isset($model['status'])) {
             $request->markNew();
@@ -65,6 +64,6 @@ class StatusAction implements ActionInterface
         return
             $request instanceof GetStatusInterface &&
             $request->getModel() instanceof \ArrayAccess
-        ;
+            ;
     }
 }

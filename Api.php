@@ -3,6 +3,7 @@ namespace PlumTreeSystems\SecureTrading;
 
 use Http\Message\MessageFactory;
 use Payum\Core\Exception\Http\HttpException;
+use Payum\Core\Exception\LogicException;
 use Payum\Core\HttpClientInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 
@@ -56,6 +57,10 @@ class Api
             'password',
             'site_reference'
         ]);
+
+        if (strpos($options['site_reference'], 'test') === false) {
+            throw new LogicException('Only test site reference are supported for now');
+        }
 
         $this->api = \Securetrading\api([
             'username' => $options['username'],

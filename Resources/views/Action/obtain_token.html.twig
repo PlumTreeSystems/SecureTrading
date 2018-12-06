@@ -1,5 +1,3 @@
-{% extends layout ?: "@PayumCore/layout.html.twig" %}
-
 {% block head %}
     <head>
         <style>
@@ -10,32 +8,74 @@
             #st-message .st-error {
                 background: #ffcdcd;
                 border: 2px solid #ffb5b5;
-                padding: 4px 4px 4px 28px !important;
+                padding: 4px 4px 4px 8px !important;
+                margin-bottom: 8px;
+                color: #750f0f;
+            }
+
+            body {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: #fbfbfb !important;
+            }
+
+            html {
+                background-color: #FBFBFB;
             }
         </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" />
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                crossorigin="anonymous"></script>
     </head>
 {% endblock %}
 
 {% block payum_body %}
-    <body>
-    <div id="st-message"></div>
-    <form id="st-payment" action="{{ actionUrl|default('') }}">
-        <!--Ensure all payment details use the data-st-field attribute.-->
-        <label for="pan">Pan:</label>
-        <input id="pan" type="text" data-st-field="pan" autocomplete="off" /><br>
-        <label for="exp_m">Expiry Month:</label>
-        <input id="exp_m" type="text" data-st-field="expirymonth" autocomplete="off" /><br>
-        <label for="exp_y" >Expiry Year:</label>
-        <input id="exp_y" type="text" data-st-field="expiryyear" autocomplete="off" /><br>
-        <label for="sec">Security Code:</label>
-        <input id="sec" type="text" data-st-field="securitycode" autocomplete="off" /><br>
-        <input type="submit" name="mybtn" />
-    </form>
+    <body class="ui cards">
+    <div class="card">
+        <div class="content">
+            <div class="ui image">
+                <img src="https://www.citizen.is/images/png/home/securetrading.png" alt="secure_trading_logo"/>
+            </div>
+        </div>
+        <div class="content">
+            <h4 class="ui didiving header">Please enter your credit card details:</h4>
+            <div id="st-message"></div>
+            <form id="st-payment" class="ui form" action="{{ actionUrl|default('') }}">
+                <!--Ensure all payment details use the data-st-field attribute.-->
+                <div class="field">
+                    <label for="pan">Credit Card Number:</label>
+                    <input id="pan" type="text" data-st-field="pan" autocomplete="off" required/><br>
+                </div>
+                <div class="field">
+                    <label for="exp_m">Expiry Month:</label>
+                    <input id="exp_m" type="text" data-st-field="expirymonth" autocomplete="off" required/><br>
+                </div>
+                <div class="field">
+                    <label for="exp_y" >Expiry Year:</label>
+                    <input id="exp_y" type="text" data-st-field="expiryyear" autocomplete="off" required/><br>
+                </div>
+                <div class="field">
+                    <label for="sec">Security Code:</label>
+                    <input id="sec" type="text" data-st-field="securitycode" autocomplete="off" required/><br>
+                </div>
+                <input
+                        class="ui basic button st-color-button"
+                        type="submit"
+                        name="mybtn"
+                />
+            </form>
+        </div>
+    </div>
     </body>
 {% endblock %}
 
 {% block payum_javascripts %}
-    {{ parent() }}
     <script src="https://webservices.securetrading.net/js/st.js"></script>
     <script>
         new SecureTrading.Standard({
