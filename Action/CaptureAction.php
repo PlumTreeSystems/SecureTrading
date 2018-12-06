@@ -5,6 +5,7 @@ use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\ApiAwareTrait;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Payum\Core\Exception\LogicException;
 use Payum\Core\Exception\UnsupportedApiException;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
@@ -50,7 +51,14 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
             $this->gateway->execute($obtainToken);
         }
 
-        throw new \LogicException('Not implemented');
+        $response = $this->api->simpleChargeRequest($model->toUnsafeArrayWithoutLocal());
+        if ($response) {
+            if (is_array($response) && sizeof($response) === 1) {
+                $model->replace($response[0]);
+                return;
+            }
+        }
+        throw new LogicException('Invalid response');
     }
 
     /**
@@ -61,6 +69,6 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
         return
             $request instanceof Capture &&
             $request->getModel() instanceof \ArrayAccess
-        ;
+            ;
     }
 }

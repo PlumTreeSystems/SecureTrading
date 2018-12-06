@@ -23,14 +23,19 @@ class StatusAction implements ActionInterface
         switch ($model['errorcode'])
         {
             case "0":
-                $request->markAuthorized();
-                return;
+                if (isset($model['requesttypedescription'])) {
+                    switch($model['requesttypedescription'])
+                    {
+                        case "AUTH":
+                            $request->markCaptured();
+                            return;
+                        case "ACCOUNTCHECK":
+                            $request->markAuthorized();
+                            return;
+                    }
+                }
             case "30000":
-                $request->markFailed();
-                return;
             case "70000":
-                $request->markFailed();
-                return;
             case "60010":
             case "60034":
             case "99999":

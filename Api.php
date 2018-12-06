@@ -58,7 +58,8 @@ class Api
         ]);
 
         $this->api = \Securetrading\api([
-            $options->toUnsafeArrayWithoutLocal()
+            'username' => $options['username'],
+            'password' => $options['password']
         ]);
 
         $this->options = $options;
@@ -85,7 +86,7 @@ class Api
     {
         $response = $this->api->process($fields);
 
-        return $response;
+        return $response->toArray();
     }
 
     public function getSiteReference()

@@ -40,14 +40,14 @@ class SecureTradingGatewayFactory extends GatewayFactory
 
         if (false == $config['payum.api']) {
             $config['payum.default_options'] = [
-                'sitereference' => '',
+                'site_reference' => '',
                 'locale' => 'en_gb',
                 'username' => '',
                 'password' => ''
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
-                'sitereference', 'locale', 'username', 'password'
+                'site_reference', 'locale', 'username', 'password'
             ];
 
             $config['payum.api'] = function (ArrayObject $config) {
