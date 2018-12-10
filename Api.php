@@ -19,23 +19,10 @@ class Api
     const REQUEST_THREEDQUERY = 'THREEDQUERY';
     const REQUEST_SUBSCRIPTION = 'SUBSCRIPTION';
 
-
-    /**
-     * @var HttpClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var MessageFactory
-     */
-    protected $messageFactory;
-
     /**
      * @var array
      */
     protected $options = [
-        'username' => null,
-        'password' => null,
         'site_reference' => null
     ];
 
@@ -43,18 +30,14 @@ class Api
 
     /**
      * @param array               $options
-     * @param HttpClientInterface $client
-     * @param MessageFactory      $messageFactory
      *
      * @throws \Payum\Core\Exception\InvalidArgumentException if an option is invalid
      */
-    public function __construct(array $options, HttpClientInterface $client, MessageFactory $messageFactory)
+    public function __construct($options, $api)
     {
         $options = ArrayObject::ensureArrayObject($options);
         $options->defaults($this->options);
         $options->validateNotEmpty([
-            'username',
-            'password',
             'site_reference'
         ]);
 
@@ -62,14 +45,8 @@ class Api
             throw new LogicException('Only test site reference are supported for now');
         }
 
-        $this->api = \Securetrading\api([
-            'username' => $options['username'],
-            'password' => $options['password']
-        ]);
-
+        $this->api = $api;
         $this->options = $options;
-        $this->client = $client;
-        $this->messageFactory = $messageFactory;
     }
 
     public function simpleChargeRequest(array $fields)

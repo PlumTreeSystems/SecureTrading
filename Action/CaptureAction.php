@@ -40,7 +40,7 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        if ($model['status']) {
+        if (isset($model['errorcode'])) {
             return;
         }
 
@@ -51,10 +51,14 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
             $this->gateway->execute($obtainToken);
         }
 
+        //TODO: Should probably move this logic out to a separate action
         $response = $this->api->simpleChargeRequest($model->toUnsafeArrayWithoutLocal());
         if ($response) {
-            if (is_array($response) && sizeof($response) === 1) {
-                $model->replace($response[0]);
+            if (isset($response['responses']) &&
+                is_array($response['responses']) &&
+                sizeof($response['responses']) === 1
+            ) {
+                $model->replace($response['responses'][0]);
                 return;
             }
         }

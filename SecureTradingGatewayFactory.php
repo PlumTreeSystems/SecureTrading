@@ -11,6 +11,7 @@ use PlumTreeSystems\SecureTrading\Action\RefundAction;
 use PlumTreeSystems\SecureTrading\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
+use PlumTreeSystems\SecureTrading\Factory\SecureTradingApiFactory;
 
 class SecureTradingGatewayFactory extends GatewayFactory
 {
@@ -52,11 +53,12 @@ class SecureTradingGatewayFactory extends GatewayFactory
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
+                $factory = new SecureTradingApiFactory((array) $config);
+                $innerApi = $factory->createApi();
 
                 return new Api(
                     (array) $config,
-                    $config['payum.http_client'],
-                    $config['httplug.message_factory']
+                    $innerApi
                 );
             };
         }

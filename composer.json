@@ -26,13 +26,17 @@
     },
     "require-dev": {
         "payum/core": "^1.5@dev",
-        "php-http/guzzle6-adapter": "^1.0"
+        "php-http/guzzle6-adapter": "^1.0",
+        "phpunit/phpunit": "^7.4"
     },
     "config": {
         "bin-dir": "bin"
     },
     "autoload": {
         "psr-0": { "PlumTreeSystems\\SecureTrading": "" }
+    },
+    "scripts": {
+        "run-unit-tests": "php bin/phpunit"
     },
     "target-dir": "PlumTreeSystems/SecureTrading",
     "extra": {
