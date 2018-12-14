@@ -20,7 +20,8 @@ abstract class ApiFactory
     protected $options = [
         'username' => null,
         'password' => null,
-        'log_filepath' => null
+        'log_filepath' => null,
+        'log_archive_filepath' => null
     ];
 
     public function __construct($options)

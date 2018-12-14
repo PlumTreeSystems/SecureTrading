@@ -18,6 +18,7 @@ use Payum\Core\GatewayInterface;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\RenderTemplate;
+use Payum\Core\Security\SensitiveValue;
 use PHPUnit\Framework\TestCase;
 use PlumTreeSystems\SecureTrading\Action\Api\ObtainTokenAction;
 use PlumTreeSystems\SecureTrading\Api;
@@ -244,7 +245,7 @@ class ObtainTokenActionTest extends TestCase
         $action->execute($obtainToken = new ObtainToken($model));
 
         $model = $obtainToken->getModel();
-        $this->assertEquals('token', $model['cachetoken']);
+        $this->assertEquals(SensitiveValue::ensureSensitive('token'), $model['cachetoken']);
     }
 
     /**

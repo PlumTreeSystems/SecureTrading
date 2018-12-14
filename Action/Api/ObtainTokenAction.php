@@ -21,6 +21,7 @@ use Payum\Core\GatewayInterface;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\RenderTemplate;
+use Payum\Core\Security\SensitiveValue;
 use PlumTreeSystems\SecureTrading\Action\Api\BaseApiAwareAction;
 use PlumTreeSystems\SecureTrading\Api;
 use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
@@ -65,8 +66,7 @@ class ObtainTokenAction implements ActionInterface, GatewayAwareInterface, ApiAw
             isset($getHttpRequest->query['cachetoken']) &&
             strlen($getHttpRequest->query['cachetoken'])
         ) {
-            $model['cachetoken'] = $getHttpRequest->query['cachetoken'];
-            $model['cachetoken_timestamp'] = time();
+            $model['cachetoken'] = SensitiveValue::ensureSensitive($getHttpRequest->query['cachetoken']);
 
             return;
         }

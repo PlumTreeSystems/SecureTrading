@@ -39,13 +39,25 @@ class SecureTradingGatewayFactory extends GatewayFactory
             }
         ]);
 
+        $rootPath = __DIR__ . DIRECTORY_SEPARATOR . '..' .
+            DIRECTORY_SEPARATOR . '..' .
+            DIRECTORY_SEPARATOR . '..' .
+            DIRECTORY_SEPARATOR . '..' .
+            DIRECTORY_SEPARATOR . '..' .
+            DIRECTORY_SEPARATOR;
+
         if (false == $config['payum.api']) {
             $config['payum.default_options'] = [
                 'site_reference' => '',
                 'locale' => 'en_gb',
                 'username' => '',
                 'password' => '',
-                'log_filepath' => ''
+                'log_filepath' =>
+                    $rootPath . 'var' .
+                    DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR,
+                'log_archive_filepath' =>
+                    $rootPath . 'var' .
+                    DIRECTORY_SEPARATOR . 'archive' . DIRECTORY_SEPARATOR
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [

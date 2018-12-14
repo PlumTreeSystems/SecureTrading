@@ -136,7 +136,14 @@ class SecureTradingGatewayFactoryTest extends TestCase
 
         $this->assertArrayHasKey('payum.default_options', $config);
         $this->assertEquals(
-            ['username' => '', 'password' => '', 'locale' => 'en_gb', 'site_reference' => ''],
+            [
+                'username' => '',
+                'password' => '',
+                'locale' => 'en_gb',
+                'site_reference' => '',
+                'log_filepath' => '/var/www/html/pts_secure/../../../../../var/logs/',
+                'log_archive_filepath' => '/var/www/html/pts_secure/../../../../../var/archive/'
+            ],
             $config['payum.default_options']
         );
     }
