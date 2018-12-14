@@ -44,7 +44,8 @@ class SecureTradingGatewayFactory extends GatewayFactory
                 'site_reference' => '',
                 'locale' => 'en_gb',
                 'username' => '',
-                'password' => ''
+                'password' => '',
+                'log_filepath' => ''
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
