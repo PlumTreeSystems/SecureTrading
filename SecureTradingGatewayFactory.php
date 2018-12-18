@@ -66,8 +66,7 @@ class SecureTradingGatewayFactory extends GatewayFactory
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
-                $factory = new SecureTradingApiFactory((array) $config);
-                $innerApi = $factory->createApi();
+                $innerApi = $this->createApi($config);
 
                 return new Api(
                     (array) $config,
@@ -79,5 +78,11 @@ class SecureTradingGatewayFactory extends GatewayFactory
         $config['payum.paths'] = array_replace([
             'PlumTreeSystemsSecureTrading' => __DIR__.'/Resources/views',
         ], $config['payum.paths'] ?: []);
+    }
+
+    protected function createApi($config) {
+        $factory = new SecureTradingApiFactory((array) $config);
+        $innerApi = $factory->createApi();
+        return $innerApi;
     }
 }
