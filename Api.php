@@ -1,11 +1,9 @@
 <?php
 namespace PlumTreeSystems\SecureTrading;
 
-use Http\Message\MessageFactory;
-use Payum\Core\Exception\Http\HttpException;
 use Payum\Core\Exception\LogicException;
-use Payum\Core\HttpClientInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use PlumTreeSystems\SecureTrading\Model\ApiConnectorInterface;
 
 class Api
 {
@@ -26,6 +24,7 @@ class Api
         'site_reference' => null
     ];
 
+    /** @var ApiConnectorInterface */
     protected $api = null;
 
     /**
@@ -74,5 +73,13 @@ class Api
     public function getSiteReference()
     {
         return $this->options['site_reference'];
+    }
+
+    public function getStaticJsAssets()
+    {
+        return [
+            'importUrl' => $this->api->getScriptImportUrl(),
+            'scriptContent' => $this->api->getScript()
+        ];
     }
 }

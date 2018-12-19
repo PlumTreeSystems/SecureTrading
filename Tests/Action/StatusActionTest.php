@@ -61,4 +61,14 @@ class StatusActionTest extends GenericActionTest
 
         $this->assertTrue($status->isCaptured());
     }
+
+    /**
+     * @test
+     */
+    public function couldBeConstructedWithoutAnyArguments()
+    {
+        $this->expectNotToPerformAssertions();
+
+        new $this->actionClass();
+    }
 }

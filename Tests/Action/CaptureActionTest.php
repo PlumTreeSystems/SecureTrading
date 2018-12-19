@@ -142,4 +142,14 @@ class CaptureActionTest extends GenericActionTest
 
         $action->execute(new Capture($model));
     }
+
+    /**
+     * @test
+     */
+    public function couldBeConstructedWithoutAnyArguments()
+    {
+        $this->expectNotToPerformAssertions();
+
+        new $this->actionClass();
+    }
 }

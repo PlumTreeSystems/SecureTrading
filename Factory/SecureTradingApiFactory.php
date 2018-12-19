@@ -9,11 +9,14 @@
 namespace PlumTreeSystems\SecureTrading\Factory;
 
 
+use PlumTreeSystems\SecureTrading\Connector\SecureTradingConnector;
+
 class SecureTradingApiFactory extends ApiFactory
 {
 
     public function createApi()
     {
-        return \Securetrading\api($this->options->toUnsafeArrayWithoutLocal());
+        $innerApi = \Securetrading\api($this->options->toUnsafeArrayWithoutLocal());
+        return new SecureTradingConnector($innerApi);
     }
 }

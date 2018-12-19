@@ -76,11 +76,8 @@
 {% endblock %}
 
 {% block payum_javascripts %}
-    <script src="https://webservices.securetrading.net/js/st.js"></script>
+    <script src={{ importUrl }}></script>
     <script>
-        new SecureTrading.Standard({
-            sitereference: '{{ site_reference }}',
-            locale: '{{ locale }}'
-        });
+        {{ scriptContent }}
     </script>
 {% endblock %}
