@@ -6,7 +6,7 @@
  * Time: 15.38
  */
 
-namespace Connector;
+namespace PlumTreeSystems\SecureTrading\Connector;
 
 
 use PlumTreeSystems\SecureTrading\Model\ApiConnectorInterface;

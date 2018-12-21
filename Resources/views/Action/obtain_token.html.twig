@@ -78,6 +78,6 @@
 {% block payum_javascripts %}
     <script src={{ importUrl }}></script>
     <script>
-        {{ scriptContent }}
+        {{ scriptContent|raw }}
     </script>
 {% endblock %}

@@ -43,8 +43,8 @@ class SecureTradingConnector implements ApiConnectorInterface
     public function getScript($siteRef, $locale): string
     {
         return "new SecureTrading.Standard({
-            sitereference: '$siteRef',
-            locale: '$locale'
+            sitereference: '.$siteRef.',
+            locale: '.$locale.'
         });";
     }
 }
