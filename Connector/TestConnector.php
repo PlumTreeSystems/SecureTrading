@@ -21,11 +21,14 @@ class TestConnector implements ApiConnectorInterface
 
     public function getScriptImportUrl(): string
     {
-        return '';
+        return 'https://code.jquery.com/jquery-3.3.1.min.js';
     }
 
-    public function getScript(): string
+    public function getScript($siteRef, $locale): string
     {
-        return '';
+        return "
+            var url = document.querySelector(\'form#st-payment\').action;
+            jQuery.ajax(url + '?cachetoken=test')
+        ";
     }
 }

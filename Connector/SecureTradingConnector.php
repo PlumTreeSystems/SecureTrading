@@ -40,11 +40,11 @@ class SecureTradingConnector implements ApiConnectorInterface
         return 'https://webservices.securetrading.net/js/st.js';
     }
 
-    public function getScript(): string
+    public function getScript($siteRef, $locale): string
     {
         return "new SecureTrading.Standard({
-            sitereference: '{{ site_reference }}',
-            locale: '{{ locale }}'
+            sitereference: '$siteRef',
+            locale: '$locale'
         });";
     }
 }

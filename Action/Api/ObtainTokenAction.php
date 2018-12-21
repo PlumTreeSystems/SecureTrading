@@ -71,13 +71,14 @@ class ObtainTokenAction implements ActionInterface, GatewayAwareInterface, ApiAw
             return;
         }
 
+        $locale = Api::LOCALE_EN;
         $siteReference = $this->api->getSiteReference();
-        $scriptAssets = $this->api->getStaticJsAssets();
+        $scriptAssets = $this->api->getStaticJsAssets($siteReference, $locale);
 
         $this->gateway->execute($renderTemplate = new RenderTemplate($this->templateName, array_merge([
             'model' => $model,
             'site_reference' => $siteReference,
-            'locale' => Api::LOCALE_EN, // TODO: change this default
+            'locale' => $locale, // TODO: change this default
             'actionUrl' => $request->getToken() ? $request->getToken()->getTargetUrl() : null,
         ], $scriptAssets)));
 

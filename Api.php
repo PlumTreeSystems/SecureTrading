@@ -75,11 +75,11 @@ class Api
         return $this->options['site_reference'];
     }
 
-    public function getStaticJsAssets()
+    public function getStaticJsAssets($siteReference, $locale)
     {
         return [
             'importUrl' => $this->api->getScriptImportUrl(),
-            'scriptContent' => $this->api->getScript()
+            'scriptContent' => $this->api->getScript($siteReference, $locale)
         ];
     }
 }

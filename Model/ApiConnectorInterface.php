@@ -15,5 +15,5 @@ interface ApiConnectorInterface
 
     public function getScriptImportUrl(): string;
 
-    public function getScript(): string;
+    public function getScript($siteRef, $locale): string;
 }
