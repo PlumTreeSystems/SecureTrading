@@ -31,7 +31,7 @@ class SecureTradingConnector implements ApiConnectorInterface
 
     public function process(array $fields): array
     {
-        return $this->api->process($fields);
+        return $this->api->process($fields)->toArray();
     }
 
 

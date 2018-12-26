@@ -8,7 +8,7 @@
 
 namespace PlumTreeSystems\SecureTrading;
 
-use Connector\TestConnector;
+use PlumTreeSystems\SecureTrading\Connector\TestConnector;
 
 class TestGatewayFactory extends SecureTradingGatewayFactory
 {

@@ -16,7 +16,7 @@ class TestConnector implements ApiConnectorInterface
 
     public function process(array $fields): array
     {
-        return ['responses' => [['errorcode' => '0']]];
+        return (['responses' => [['errorcode' => '0', 'requesttypedescription' => 'AUTH']]]);
     }
 
     public function getScriptImportUrl(): string
@@ -27,8 +27,7 @@ class TestConnector implements ApiConnectorInterface
     public function getScript($siteRef, $locale): string
     {
         return "
-            var url = document.querySelector(\'form#st-payment\').action;
-            jQuery.ajax(url + '?cachetoken=test')
+            window.location.href = window.location.href + '?cachetoken=test'
         ";
     }
 }

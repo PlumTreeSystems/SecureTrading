@@ -67,7 +67,7 @@ class Api
     {
         $response = $this->api->process($fields);
 
-        return $response->toArray();
+        return $response;
     }
 
     public function getSiteReference()
