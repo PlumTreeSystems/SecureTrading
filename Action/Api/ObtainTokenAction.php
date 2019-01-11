@@ -13,16 +13,13 @@ use Payum\Core\ApiAwareInterface;
 use Payum\Core\ApiAwareTrait;
 use Payum\Core\Exception\LogicException;
 use Payum\Core\Exception\RequestNotSupportedException;
-use Payum\Core\Exception\UnsupportedApiException;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
-use Payum\Core\GatewayInterface;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\RenderTemplate;
 use Payum\Core\Security\SensitiveValue;
-use PlumTreeSystems\SecureTrading\Action\Api\BaseApiAwareAction;
 use PlumTreeSystems\SecureTrading\Api;
 use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
 

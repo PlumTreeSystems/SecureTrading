@@ -33,8 +33,13 @@ class StatusAction implements ActionInterface
                             case "ACCOUNTCHECK":
                                 $request->markAuthorized();
                                 return;
+                            case "STORE":
+                                $request->markNew();
+                                $model['errorcode'] = null;
+                                return;
                         }
                     }
+                    throw new \LogicException('Unhandled request type');
                 default:
                     $request->markFailed();
                     return;

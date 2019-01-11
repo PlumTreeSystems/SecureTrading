@@ -48,14 +48,33 @@ class Api
         $this->options = $options;
     }
 
-    public function simpleChargeRequest(array $fields)
+    public function chargeRequest(array $fields)
     {
         $fields = array_merge($fields, [
             'accounttypedescription' => 'ECOM',
             'requesttypedescriptions' => ['AUTH'],
             'sitereference' => $this->options['site_reference']
         ]);
+        return $this->doRequest($this->transformTransactionReference($fields));
+    }
+
+    public function storeCreditCardRequest(array $fields)
+    {
+        $fields = array_merge($fields, [
+            'accounttypedescription' => 'CARDSTORE',
+            'requesttypedescriptions' => ['STORE'],
+            'sitereference' => $this->options['site_reference']
+        ]);
         return $this->doRequest($fields);
+    }
+
+    private function transformTransactionReference(array $fields)
+    {
+        if (isset($fields['transactionreference']) && !(isset($fields['parenttransactionreference']))) {
+            $fields['parenttransactionreference'] = $fields['transactionreference'];
+            $fields['transactionreference'] = null;
+        }
+        return $fields;
     }
 
     /**
@@ -81,5 +100,18 @@ class Api
             'importUrl' => $this->api->getScriptImportUrl(),
             'scriptContent' => $this->api->getScript($siteReference, $locale)
         ];
+    }
+
+    public static function unwrapResponse($response)
+    {
+        if ($response) {
+            if (isset($response['responses']) &&
+                is_array($response['responses']) &&
+                sizeof($response['responses']) === 1
+            ) {
+                return $response['responses'][0];
+            }
+        }
+        throw new LogicException('Invalid response');
     }
 }
