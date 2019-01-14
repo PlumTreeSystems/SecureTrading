@@ -44,7 +44,7 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
             return;
         }
 
-        if (false == $model['transactionreference']) {
+        if (false == $model['cachetoken']) {
             $obtainToken = new ObtainToken($request->getToken());
             $obtainToken->setModel($model);
 
