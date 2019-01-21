@@ -1,6 +1,7 @@
 <?php
 namespace PlumTreeSystems\SecureTrading;
 
+use Action\Api\AccountCheckAction;
 use PlumTreeSystems\SecureTrading\Action\Api\ObtainTokenAction;
 use PlumTreeSystems\SecureTrading\Action\AuthorizeAction;
 use PlumTreeSystems\SecureTrading\Action\CancelAction;
@@ -33,6 +34,7 @@ class SecureTradingGatewayFactory extends GatewayFactory
             'payum.action.notify' => new NotifyAction(),
             'payum.action.status' => new StatusAction(),
             'payum.action.convert_payment' => new ConvertPaymentAction(),
+            'payum.action.account_check' => new AccountCheckAction(),
 
             'payum.action.obtain_token' => function (ArrayObject $config) {
                 return new ObtainTokenAction($config['payum.template.obtain_token']);

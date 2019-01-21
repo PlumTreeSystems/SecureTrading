@@ -13,6 +13,7 @@ use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 use PlumTreeSystems\SecureTrading\Api;
 use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
+use Request\Api\AccountCheck;
 
 class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
@@ -44,13 +45,22 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
             return;
         }
 
-        if (false == $model['cachetoken'] &&
-            (false == $model['credentialsonfile'] || $model['credentialsonfile'] !== '2')
-        ) {
-            $obtainToken = new ObtainToken($request->getToken());
-            $obtainToken->setModel($model);
+        if (false == $model['credentialsonfile'] || $model['credentialsonfile'] !== '2') {
+            if (false == $model['cachetoken']) {
+                $obtainToken = new ObtainToken($request->getToken());
+                $obtainToken->setModel($model);
 
-            $this->gateway->execute($obtainToken);
+                $this->gateway->execute($obtainToken);
+            }
+
+            if (isset($model['requesttypedescriptions']) &&
+                in_array('ACCOUNTCHECK', $model['requesttypedescriptions'])
+            ) {
+                $accountCheck = new AccountCheck($request->getToken());
+                $accountCheck->setModel($model);
+
+                $this->gateway->execute($accountCheck);
+            }
         }
 
         //TODO: Should probably move this logic out to a separate action

@@ -26,15 +26,11 @@ class SaveCreditCardAction implements ActionInterface, GatewayAwareInterface, Ap
 
     use GatewayAwareTrait;
 
-    protected $templateName;
-
     /**
      * ObtainTokenAction constructor.
-     * @param $templateName
      */
-    public function __construct($templateName)
+    public function __construct()
     {
-        $this->templateName = $templateName;
         $this->apiClass = Api::class;
     }
 
