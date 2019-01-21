@@ -52,8 +52,7 @@ class Api
     {
         $fields = array_merge($fields, [
             'accounttypedescription' => 'ECOM',
-            'requesttypedescriptions' => ['AUTH'],
-            'sitereference' => $this->options['site_reference']
+            'requesttypedescriptions' => ['AUTH']
         ]);
         return $this->doRequest($this->transformTransactionReference($fields));
     }
@@ -62,8 +61,16 @@ class Api
     {
         $fields = array_merge($fields, [
             'accounttypedescription' => 'CARDSTORE',
-            'requesttypedescriptions' => ['STORE'],
-            'sitereference' => $this->options['site_reference']
+            'requesttypedescriptions' => ['STORE']
+        ]);
+        return $this->doRequest($fields);
+    }
+
+    public function noChargeAuthorizeRequest(array $fields)
+    {
+        $fields = array_merge($fields, [
+            'accounttypedescription' => 'ECOM',
+            'requesttypedescriptions' => ['ACCOUNTCHECK']
         ]);
         return $this->doRequest($fields);
     }
@@ -84,6 +91,9 @@ class Api
      */
     protected function doRequest(array $fields)
     {
+        $fields = array_merge($fields, [
+            'sitereference' => $this->options['site_reference']
+        ]);
         $response = $this->api->process($fields);
 
         return $response;
