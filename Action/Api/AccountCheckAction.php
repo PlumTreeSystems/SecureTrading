@@ -6,14 +6,12 @@
  * Time: 15.53
  */
 
-namespace Action\Api;
-
+namespace PlumTreeSystems\SecureTrading\Action\Api;
 
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
-use PlumTreeSystems\SecureTrading\Action\Api\BaseApiAwareAction;
 use PlumTreeSystems\SecureTrading\Api;
-use Request\Api\AccountCheck;
+use PlumTreeSystems\SecureTrading\Request\Api\AccountCheck;
 
 class AccountCheckAction extends BaseApiAwareAction
 {

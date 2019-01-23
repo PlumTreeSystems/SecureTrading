@@ -6,7 +6,7 @@
  * Time: 15.54
  */
 
-namespace Request\Api;
+namespace PlumTreeSystems\SecureTrading\Request\Api;
 
 
 use Payum\Core\Request\Generic;

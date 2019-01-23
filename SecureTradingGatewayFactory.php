@@ -1,7 +1,7 @@
 <?php
 namespace PlumTreeSystems\SecureTrading;
 
-use Action\Api\AccountCheckAction;
+use PlumTreeSystems\SecureTrading\Action\Api\AccountCheckAction;
 use PlumTreeSystems\SecureTrading\Action\Api\ObtainTokenAction;
 use PlumTreeSystems\SecureTrading\Action\AuthorizeAction;
 use PlumTreeSystems\SecureTrading\Action\CancelAction;

@@ -19,6 +19,10 @@ class StatusAction implements ActionInterface
         RequestNotSupportedException::assertSupports($this, $request);
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
+        if ($this->checkAcquirerAdviceCode($model, $request)) {
+            $request->markFailed();
+            return;
+        }
 
         if (isset($model['errorcode'])) {
             switch ($model['errorcode'])
@@ -59,6 +63,28 @@ class StatusAction implements ActionInterface
 
 
         throw new \LogicException('Invalid Status');
+    }
+
+    private function checkAcquirerAdviceCode($model, GetStatusInterface $request)
+    {
+        if (isset($model['ackquireradvicecode'])) {
+            switch ($model['ackquireradvicecode'])
+            {
+                case "0":
+                    return false;
+                case "1":
+                    $model['ackquireradviceerror'] = "Need to update customers payment information";
+                    return false;
+                case "2":
+                    $model['ackquireradviceerror'] = "Try again later";
+                case "4":
+                case "8":
+                    $model['ackquireradviceerror'] = "Do not process further recurring transactions";
+                    $model['errorcode'] = "1";
+                    return true;
+            }
+        }
+        return false;
     }
 
     /**

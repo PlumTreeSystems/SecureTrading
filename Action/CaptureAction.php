@@ -12,8 +12,8 @@ use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 use PlumTreeSystems\SecureTrading\Api;
+use PlumTreeSystems\SecureTrading\Request\Api\AccountCheck;
 use PlumTreeSystems\SecureTrading\Request\Api\ObtainToken;
-use Request\Api\AccountCheck;
 
 class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
@@ -60,7 +60,16 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
                 $accountCheck->setModel($model);
 
                 $this->gateway->execute($accountCheck);
+                return;
             }
+        }
+
+        if ($model['credentialsonfile'] === '2') {
+            //TODO: Should probably move this logic out to a separate action
+            $response = $this->api->recurringRequest($model->toUnsafeArrayWithoutLocal());
+            $unwrappedResponse = Api::unwrapResponse($response);
+            $model->replace($unwrappedResponse);
+            return;
         }
 
         //TODO: Should probably move this logic out to a separate action

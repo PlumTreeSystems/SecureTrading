@@ -57,6 +57,15 @@ class Api
         return $this->doRequest($this->transformTransactionReference($fields));
     }
 
+    public function recurringRequest(array $fields)
+    {
+        $fields = array_merge($fields, [
+            'accounttypedescription' => 'RECUR',
+            'requesttypedescriptions' => ['AUTH']
+        ]);
+        return $this->doRequest($this->transformTransactionReference($fields));
+    }
+
     public function storeCreditCardRequest(array $fields)
     {
         $fields = array_merge($fields, [
